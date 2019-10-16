@@ -1,4 +1,4 @@
-package com.mcssoft.racereminderactest.ui.main
+package com.mcssoft.racereminderactest.model
 
 import androidx.lifecycle.ViewModel
 

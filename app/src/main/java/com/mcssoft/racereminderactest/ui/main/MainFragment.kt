@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mcssoft.racereminderactest.R
+import com.mcssoft.racereminderactest.model.MainViewModel
 
 class MainFragment : Fragment() {
 

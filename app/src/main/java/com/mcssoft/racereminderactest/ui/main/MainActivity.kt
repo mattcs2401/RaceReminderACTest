@@ -1,8 +1,8 @@
-package com.mcssoft.racereminderactest
+package com.mcssoft.racereminderactest.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.mcssoft.racereminderactest.ui.main.MainFragment
+import com.mcssoft.racereminderactest.R
 
 class MainActivity : AppCompatActivity() {
 
