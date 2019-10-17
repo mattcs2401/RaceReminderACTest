@@ -11,6 +11,9 @@ interface RacesDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRace(race: Race): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertRaces(races: List<Race>): List<Long>
+
     @Update(onConflict = OnConflictStrategy.IGNORE)
     fun updateRace(race: Race): Int
 
