@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.mcssoft.racereminderactest.R
-import com.mcssoft.racereminderactest.model.MainViewModel
+import com.mcssoft.racereminderactest.entity.Race
+import com.mcssoft.racereminderactest.repository.RacesRepository
+import com.mcssoft.racereminderactest.model.RaceViewModel
+import com.mcssoft.racereminderactest.model.RaceViewModelFactory
+import com.mcssoft.racereminderactest.observer.RaceListObserver
 
 class MainFragment : Fragment() {
 
@@ -15,7 +20,7 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var raceViewModel: RaceViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +31,21 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+//        raceViewModel = ViewModelProviders.of(this).get(RaceViewModel::class.java)
+
+        // Set the view model and observe.
+        raceViewModel = ViewModelProviders
+            .of(this, RaceViewModelFactory(RacesRepository(activity!!.application)))
+            .get(RaceViewModel::class.java)
+
+        raceViewModel.getAllRaces().observe(viewLifecycleOwner, RaceListObserver(raceViewModel))
+
+//        raceViewModel.getAllRaces().observe(viewLifecycleOwner, Observer { lRaces ->
+//            val test = lRaces
+//            val bp = "bp"
+//        })
+
+
     }
 
 }

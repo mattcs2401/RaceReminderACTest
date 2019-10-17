@@ -1,5 +1,7 @@
 package com.mcssoft.racereminderactest.dao
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.mcssoft.racereminderactest.entity.Race
 
@@ -14,4 +16,8 @@ interface RacesDAO {
 
     @Delete
     fun deleteRace(race: Race)
+
+    @Query("select * from races")
+    fun getAllRaces(): LiveData<MutableList<Race>>
+
 }

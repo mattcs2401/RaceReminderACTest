@@ -33,4 +33,5 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:2.1.0-alpha02"
     kapt "android.arch.persistence.room:compiler:2.1.0-alpha02"
 
+//    implementation "android.arch.lifecycle:livedata-core:1.1.1"
 }
