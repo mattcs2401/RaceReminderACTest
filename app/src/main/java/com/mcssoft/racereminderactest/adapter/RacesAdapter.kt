@@ -34,6 +34,7 @@ class RacesAdapter(private val iRepo: IRepository) :
         // Delete from the backing data.
         iRepo.deleteAt(pos)
         // Notify the adapter.
-        notifyItemRemoved(pos)    }
+        notifyItemRemoved(pos)
+    }
     //</editor-fold> {
 }

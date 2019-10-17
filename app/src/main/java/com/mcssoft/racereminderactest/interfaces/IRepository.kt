@@ -3,7 +3,7 @@ package com.mcssoft.racereminderactest.interfaces
 import com.mcssoft.racereminderactest.entity.Race
 
 /**
- * Interface between the MainFragment and RaceDetailsAdapter to reference RaceViewModel -> RaceRepository
+ * Interface between the MainFragment and RacesAdapter to reference RaceViewModel -> RaceRepository
  * functionality.
  */
 interface IRepository {

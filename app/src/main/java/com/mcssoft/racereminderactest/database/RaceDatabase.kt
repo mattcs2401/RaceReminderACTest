@@ -29,9 +29,9 @@ abstract class RaceDatabase: RoomDatabase() {
                     )
                         .fallbackToDestructiveMigration()
                         .addCallback(object : RoomDatabase.Callback() {
-                            override fun onCreate(db: SupportSQLiteDatabase) {
-                                fillInDb(context.applicationContext)
-                            }
+//                            override fun onCreate(db: SupportSQLiteDatabase) {
+//                                fillInDb(context.applicationContext)
+//                            }
                         })
                         .build()
                 }
@@ -39,25 +39,25 @@ abstract class RaceDatabase: RoomDatabase() {
             return instance
         }
 
-        private fun fillInDb(context: Context) {
-            GlobalScope.launch {
-                getInstance(context.applicationContext as Application?)?.racesDao()!!.insertRaces(
-                    dummyData
-                )
-            }
-        }
+//        private fun fillInDb(context: Context) {
+//            GlobalScope.launch {
+//                getInstance(context.applicationContext as Application?)?.racesDao()!!.insertRaces(
+//                    dummyData
+//                )
+//            }
+//        }
 
     }
 }
-private val dummyData = arrayListOf<Race>(
-    Race("Race name 1"),
-    Race("Race name 2"),
-    Race("Race name 3"),
-    Race("Race name 4"),
-    Race("Race name 5"),
-    Race("Race name 6"),
-    Race("Race name 7"),
-    Race("Race name 8"),
-    Race("Race name 9")
-
-)
+//private val dummyData = arrayListOf<Race>(
+//    Race("Race name 1"),
+//    Race("Race name 2"),
+//    Race("Race name 3"),
+//    Race("Race name 4"),
+//    Race("Race name 5"),
+//    Race("Race name 6"),
+//    Race("Race name 7"),
+//    Race("Race name 8"),
+//    Race("Race name 9")
+//
+//)

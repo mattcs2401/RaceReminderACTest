@@ -3,6 +3,7 @@ package com.mcssoft.racereminderactest.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.mcssoft.racereminderactest.background.RacesInsertTask
 import com.mcssoft.racereminderactest.dao.RacesDAO
 import com.mcssoft.racereminderactest.database.RaceDatabase
 import com.mcssoft.racereminderactest.entity.Race
@@ -10,21 +11,20 @@ import com.mcssoft.racereminderactest.entity.Race
 class RacesRepository() {
     constructor(application: Application) : this() {
         racesDao = RaceDatabase.getInstance(application)!!.racesDao()
-        update()
-        val bp = "bp"
+        lRaces = racesDao.getAllRaces()
     }
 
     val getAllRaces
     get() = lRaces
 
-    fun swapData(lRaces: MutableList<Race>) {
-        _lRaces.setValue(lRaces)
+    fun setData(lRaces: MutableList<Race>) {
+        _lRaces = lRaces
     }
 
     fun insertRace(race: Race): Long {
-        val id = racesDao.insertRace(race)
-        update()
-        return  id
+        val racesAsync = RacesInsertTask(racesDao)
+        racesAsync.execute(race)
+        return  racesAsync.get() as Long
     }
 
     fun updateRace(race: Race) {
@@ -33,36 +33,31 @@ class RacesRepository() {
 
     fun deleteRace(race: Race) {
         racesDao.deleteRace(race)
-        update()
     }
 
     fun getRace(ndx: Int): Race {
-        if(_lRaces.value != null) {
-            return _lRaces.value!!.get(ndx)
+        if(_lRaces.size > 0) {
+            return _lRaces.get(ndx)
         }
         return Race("")
     }
 
+    // TODO - the adapter is calling this before the observer onChange sets the data.
     fun getRaceCount(): Int {
-        if(lRaces.value != null) {
-           return _lRaces.value!!.size
+        if(_lRaces.size < 1) {
+            return 1
+        } else {
+            return _lRaces.size
         }
-        return 0
     }
 
     fun deleteAt(ndx: Int) {
         // TBA
     }
 
-    fun isEmpty(): Boolean = _lRaces.value!!.size > 0
+    fun isEmpty(): Boolean = _lRaces.size > 0
 
-    private val lRaces : LiveData<MutableList<Race>>
-        get() = _lRaces
-
-    private fun update() {
-        _lRaces = MutableLiveData<MutableList<Race>>(racesDao.getAllRaces().value)
-    }
-
+    private lateinit var lRaces : LiveData<MutableList<Race>>
+    private var _lRaces = mutableListOf<Race>()
     private lateinit var racesDao: RacesDAO
-    private lateinit var _lRaces: MutableLiveData<MutableList<Race>>
 }

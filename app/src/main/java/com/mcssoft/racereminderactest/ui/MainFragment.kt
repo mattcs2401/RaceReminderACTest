@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mcssoft.racereminderactest.R
 import com.mcssoft.racereminderactest.adapter.RacesAdapter
 import com.mcssoft.racereminderactest.entity.Race
@@ -18,7 +19,7 @@ import com.mcssoft.racereminderactest.model.RaceViewModelFactory
 import com.mcssoft.racereminderactest.observer.RaceListObserver
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
-class MainFragment : Fragment(), IRepository {
+class MainFragment : Fragment(), IRepository, View.OnClickListener {
 
     companion object {
         fun newInstance() = MainFragment()
@@ -33,26 +34,49 @@ class MainFragment : Fragment(), IRepository {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        raceAdapter = RacesAdapter(this)
         recyclerView = view.id_recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = raceAdapter
+
+        raceRepo = RacesRepository(activity!!.application)
+
+        fab = view.id_fab
+        fab.setOnClickListener(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         // Set the view model and observe.
         raceViewModel = ViewModelProviders
-            .of(this, RaceViewModelFactory(RacesRepository(activity!!.application)))
+            .of(this, RaceViewModelFactory(raceRepo))
             .get(RaceViewModel::class.java)
 
-        raceViewModel.getAllRaces.observe(viewLifecycleOwner, RaceListObserver(raceViewModel))
+        raceObserver = RaceListObserver(raceViewModel)
 
+        raceViewModel.getAllRaces.observe(viewLifecycleOwner, raceObserver)
+
+        raceAdapter = RacesAdapter(this)
+        recyclerView.adapter = raceAdapter
+    }
+
+    override fun onStart() {
+        super.onStart()
+        raceAdapter.notifyDataSetChanged()
+//        raceAdapter = RacesAdapter(this)
+//        recyclerView.adapter = raceAdapter
+    }
+
+    override fun onClick(view: View) {
+        when(view.id) {
+            R.id.id_fab -> {
+                val race = Race("Race name 1")
+                insert(race)
+            } else -> {}
+        }
 
     }
 
     //<editor-fold default state="collapsed" desc="Region: IRepository">
-    override fun getCount(): Int = raceViewModel.getRaceCount()
+    override fun getCount(): Int = raceViewModel.getCount()
 
     override fun getAt(ndx: Int): Race = raceViewModel.getRace(ndx)
 
@@ -70,4 +94,7 @@ class MainFragment : Fragment(), IRepository {
 
     private lateinit var raceAdapter: RacesAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
+    private lateinit var raceRepo: RacesRepository
+    private lateinit var raceObserver: RaceListObserver
 }
