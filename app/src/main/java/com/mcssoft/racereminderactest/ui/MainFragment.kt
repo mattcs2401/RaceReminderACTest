@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mcssoft.racereminderactest.R
+import com.mcssoft.racereminderactest.entity.Race
+import com.mcssoft.racereminderactest.interfaces.IRepository
 import com.mcssoft.racereminderactest.repository.RacesRepository
 import com.mcssoft.racereminderactest.model.RaceViewModel
 import com.mcssoft.racereminderactest.model.RaceViewModelFactory
 import com.mcssoft.racereminderactest.observer.RaceListObserver
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), IRepository {
 
     companion object {
         fun newInstance() = MainFragment()
@@ -34,7 +36,22 @@ class MainFragment : Fragment() {
         raceViewModel.getAllRaces.observe(viewLifecycleOwner, RaceListObserver(raceViewModel))
 
 
-
     }
+
+    //<editor-fold default state="collapsed" desc="Region: IRepository">
+    override fun getCount(): Int = raceViewModel.getRaceCount()
+
+    override fun getAt(ndx: Int): Race = raceViewModel.getRace(ndx)
+
+    override fun insert(race: Race) : Long = raceViewModel.insertRace(race)
+
+    override fun deleteAt(ndx: Int) {
+        raceViewModel.deleteAt(ndx)
+        if(raceViewModel.isEmpty()) {
+            // TBA
+//            setDeleteMenuItem(false)
+        }
+    }
+    //</editor-fold>
 
 }

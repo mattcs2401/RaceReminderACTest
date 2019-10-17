@@ -25,7 +25,7 @@ interface IRepository {
      * Insert the given RaceDetails.
      * @param raceDetails: The RaceDetails to insert.
      */
-    fun insert(raceDetails: Race) : Long
+    fun insert(race: Race) : Long
 
     /**
      * Delete the RaceDetails that corresponds to the backing data position.

@@ -10,9 +10,17 @@ class RaceViewModel(private val repository: RacesRepository) : ViewModel() {
 
     fun swapData(lRaces: MutableList<Race>) = repository.swapData(lRaces)
 
-    fun insertRace(race: Race) = repository.insertRace(race)
+    fun insertRace(race: Race): Long = repository.insertRace(race)
 
     fun updateRace(race: Race) = repository.updateRace(race)
 
     fun deleteRace(race: Race) = repository.deleteRace(race)
+
+    fun getRace(ndx: Int): Race = repository.getRace(ndx)
+
+    fun getRaceCount(): Int = repository.getRaceCount()
+
+    fun deleteAt(ndx: Int) = repository.deleteAt(ndx)
+
+    fun isEmpty(): Boolean = repository.isEmpty()
 }

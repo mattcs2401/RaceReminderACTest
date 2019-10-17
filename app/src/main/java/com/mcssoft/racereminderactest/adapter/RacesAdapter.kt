@@ -15,13 +15,13 @@ class RacesAdapter(private val iRepo: IRepository) :
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.row_race, parent, false)
-        Log.d("TAG","RaceDetailsAdapter.onCreateViewHolder")
+//        Log.d("TAG","RaceDetailsAdapter.onCreateViewHolder")
         return RacesViewHolder(view)
     }
 
     override fun onBindViewHolder(holder : RacesViewHolder, position : Int) {
         holder.bind(iRepo.getAt(position), position)
-        Log.d("TAG","RaceDetailsAdapter.onBindViewHolder")
+//        Log.d("TAG","RaceDetailsAdapter.onBindViewHolder")
     }
 
     override fun getItemCount() : Int = iRepo.getCount()
