@@ -6,13 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mcssoft.racereminderactest.R
+import com.mcssoft.racereminderactest.adapter.RacesAdapter
 import com.mcssoft.racereminderactest.entity.Race
 import com.mcssoft.racereminderactest.interfaces.IRepository
 import com.mcssoft.racereminderactest.repository.RacesRepository
 import com.mcssoft.racereminderactest.model.RaceViewModel
 import com.mcssoft.racereminderactest.model.RaceViewModelFactory
 import com.mcssoft.racereminderactest.observer.RaceListObserver
+import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MainFragment : Fragment(), IRepository {
 
@@ -24,6 +28,15 @@ class MainFragment : Fragment(), IRepository {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.main_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        raceAdapter = RacesAdapter(this)
+        recyclerView = view.id_recyclerView
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = raceAdapter
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -54,4 +67,7 @@ class MainFragment : Fragment(), IRepository {
     }
     //</editor-fold>
 
+
+    private lateinit var raceAdapter: RacesAdapter
+    private lateinit var recyclerView: RecyclerView
 }

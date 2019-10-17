@@ -36,9 +36,19 @@ class RacesRepository() {
         update()
     }
 
-    fun getRace(ndx: Int): Race = _lRaces.value!!.get(ndx)
+    fun getRace(ndx: Int): Race {
+        if(_lRaces.value != null) {
+            return _lRaces.value!!.get(ndx)
+        }
+        return Race("")
+    }
 
-    fun getRaceCount(): Int = _lRaces.value!!.size
+    fun getRaceCount(): Int {
+        if(lRaces.value != null) {
+           return _lRaces.value!!.size
+        }
+        return 0
+    }
 
     fun deleteAt(ndx: Int) {
         // TBA
