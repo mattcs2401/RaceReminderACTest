@@ -8,33 +8,34 @@ import com.mcssoft.racereminderactest.database.RaceDatabase
 import com.mcssoft.racereminderactest.entity.Race
 
 class RacesRepository() {
-
-
-    private var _lRaces = MutableLiveData<MutableList<Race>>()
-    val lRaces : LiveData<MutableList<Race>>
-        get() = _lRaces
-
     constructor(application: Application) : this() {
-        // Note: Used in the ViewModel for the MainFragment.
         racesDao = RaceDatabase.getInstance(application)!!.racesDao()
-        _lRaces = getlRaces()
+        _lRaces = MutableLiveData<MutableList<Race>>(racesDao.getAllRaces().value)
         val bp = "bp"
     }
 
-    fun getAllRaces() = lRaces
+    val getAllRaces
+    get() = lRaces
 
     fun swapData(lRaces: MutableList<Race>) {
         _lRaces.setValue(lRaces)
     }
 
-    private fun getlRaces(): MutableLiveData<MutableList<Race>> {
-        val races: LiveData<MutableList<Race>> = racesDao.getAllRaces()
-        return MutableLiveData<MutableList<Race>>(races.value)
+    fun insertRace(race: Race) {
+        racesDao.insertRace(race)
     }
 
-    private lateinit var racesDao: RacesDAO
+    fun updateRace(race: Race) {
+        racesDao.updateRace(race)
+    }
 
-//    private val _score = MutableLiveData<Int>()
-//    val score: LiveData<Int>
-//        get() = _score
+    fun deleteRace(race: Race) {
+        racesDao.deleteRace(race)
+    }
+
+    private val lRaces : LiveData<MutableList<Race>>
+        get() = _lRaces
+
+    private lateinit var racesDao: RacesDAO
+    private lateinit var _lRaces: MutableLiveData<MutableList<Race>>
 }

@@ -29,6 +29,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
 
+    implementation "androidx.recyclerview:recyclerview:1.1.0-beta05"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+
     // Room database.
     implementation "android.arch.persistence.room:runtime:2.1.0-alpha02"
     kapt "android.arch.persistence.room:compiler:2.1.0-alpha02"

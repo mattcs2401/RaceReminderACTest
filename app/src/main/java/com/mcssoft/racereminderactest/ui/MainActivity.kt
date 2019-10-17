@@ -1,4 +1,4 @@
-package com.mcssoft.racereminderactest.ui.main
+package com.mcssoft.racereminderactest.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,7 +11,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container,
+                    MainFragment.newInstance()
+                )
                 .commitNow()
         }
     }
