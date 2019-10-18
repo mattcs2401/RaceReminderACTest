@@ -23,4 +23,7 @@ interface RacesDAO {
     @Query("select * from races")
     fun getAllRaces(): LiveData<MutableList<Race>>
 
+    @Query("select count(*) from races")
+    fun getCount(): Int
+
 }
