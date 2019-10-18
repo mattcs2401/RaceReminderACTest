@@ -23,4 +23,8 @@ class RaceViewModel(private val repository: RacesRepository) : ViewModel() {
     fun deleteAt(ndx: Int) = repository.deleteAt(ndx)
 
     fun isEmpty(): Boolean = repository.isEmpty()
+
+    fun notifyChange() {
+        // TBA
+    }
 }

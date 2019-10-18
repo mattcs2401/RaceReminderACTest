@@ -3,6 +3,8 @@ package com.mcssoft.racereminderactest.observer
 import androidx.lifecycle.Observer
 import com.mcssoft.racereminderactest.entity.Race
 import com.mcssoft.racereminderactest.model.RaceViewModel
+import com.mcssoft.racereminderactest.utility.NotifyUpdateMessage
+import org.greenrobot.eventbus.EventBus
 
 class RaceListObserver(private var raceViewModel: RaceViewModel) : Observer<MutableList<Race>> {
 
@@ -12,6 +14,8 @@ class RaceListObserver(private var raceViewModel: RaceViewModel) : Observer<Muta
                 lRaces.sortedBy { it.raceName }
             }
             raceViewModel.setData(lRaces)
+
+            EventBus.getDefault().post(NotifyUpdateMessage())
         }
     }
 }

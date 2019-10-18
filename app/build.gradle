@@ -38,4 +38,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
 
 //    implementation "android.arch.lifecycle:livedata-core:1.1.1"
+
+    // EventBus.
+    implementation "org.greenrobot:eventbus:3.1.1"
 }

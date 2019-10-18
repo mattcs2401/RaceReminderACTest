@@ -12,6 +12,9 @@ class RacesRepository() {
     constructor(application: Application) : this() {
         racesDao = RaceDatabase.getInstance(application)!!.racesDao()
         lRaces = racesDao.getAllRaces()
+
+        _lRaces = mutableListOf<Race>()
+        _lRaces.add(Race("Dummy"))
     }
 
     val getAllRaces
@@ -44,11 +47,7 @@ class RacesRepository() {
 
     // TODO - the adapter is calling this before the observer onChange sets the data.
     fun getRaceCount(): Int {
-        if(_lRaces.size < 1) {
-            return 1
-        } else {
-            return _lRaces.size
-        }
+        return _lRaces.size
     }
 
     fun deleteAt(ndx: Int) {
@@ -58,6 +57,6 @@ class RacesRepository() {
     fun isEmpty(): Boolean = _lRaces.size > 0
 
     private lateinit var lRaces : LiveData<MutableList<Race>>
-    private var _lRaces = mutableListOf<Race>()
+    private lateinit var _lRaces: MutableList<Race>
     private lateinit var racesDao: RacesDAO
 }

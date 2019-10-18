@@ -17,7 +17,10 @@ import com.mcssoft.racereminderactest.repository.RacesRepository
 import com.mcssoft.racereminderactest.model.RaceViewModel
 import com.mcssoft.racereminderactest.model.RaceViewModelFactory
 import com.mcssoft.racereminderactest.observer.RaceListObserver
+import com.mcssoft.racereminderactest.utility.NotifyUpdateMessage
 import kotlinx.android.synthetic.main.main_fragment.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class MainFragment : Fragment(), IRepository, View.OnClickListener {
 
@@ -34,10 +37,10 @@ class MainFragment : Fragment(), IRepository, View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        raceRepo = RacesRepository(activity!!.application)
+
         recyclerView = view.id_recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-
-        raceRepo = RacesRepository(activity!!.application)
 
         fab = view.id_fab
         fab.setOnClickListener(this)
@@ -60,9 +63,19 @@ class MainFragment : Fragment(), IRepository, View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        raceAdapter.notifyDataSetChanged()
+        EventBus.getDefault().register(this)
 //        raceAdapter = RacesAdapter(this)
 //        recyclerView.adapter = raceAdapter
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe
+    fun onMessageEvent(notifyUpdateMessage: NotifyUpdateMessage) {
+        raceAdapter.notifyDataSetChanged()
     }
 
     override fun onClick(view: View) {
