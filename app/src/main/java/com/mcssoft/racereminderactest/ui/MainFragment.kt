@@ -21,6 +21,7 @@ import com.mcssoft.racereminderactest.utility.NotifyUpdateMessage
 import kotlinx.android.synthetic.main.main_fragment.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import kotlin.random.Random
 
 class MainFragment : Fragment(), IRepository, View.OnClickListener {
 
@@ -75,13 +76,13 @@ class MainFragment : Fragment(), IRepository, View.OnClickListener {
 
     @Subscribe
     fun onMessageEvent(notifyUpdateMessage: NotifyUpdateMessage) {
-        raceAdapter.notifyDataSetChanged()
+//        raceAdapter.notifyDataSetChanged()
     }
 
     override fun onClick(view: View) {
         when(view.id) {
             R.id.id_fab -> {
-                val race = Race("Race name 1")
+                val race = Race("Race name " + Random(99).toString())
                 insert(race)
             } else -> {}
         }
@@ -101,6 +102,11 @@ class MainFragment : Fragment(), IRepository, View.OnClickListener {
             // TBA
 //            setDeleteMenuItem(false)
         }
+    }
+
+    override fun notifyAt(position: Int) {
+//        raceAdapter.notifyItemChanged(position)
+//        raceAdapter.notifyDataSetChanged()
     }
     //</editor-fold>
 

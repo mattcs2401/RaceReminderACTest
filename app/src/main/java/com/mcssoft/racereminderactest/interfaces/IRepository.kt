@@ -32,4 +32,9 @@ interface IRepository {
      * @param ndx: A list index into the backing data (position).
      */
     fun deleteAt(ndx: Int)
+
+    /**
+     *
+     */
+    fun notifyAt(position: Int)
 }

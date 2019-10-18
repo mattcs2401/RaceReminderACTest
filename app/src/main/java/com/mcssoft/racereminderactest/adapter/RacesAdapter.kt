@@ -21,6 +21,7 @@ class RacesAdapter(private val iRepo: IRepository) :
 
     override fun onBindViewHolder(holder : RacesViewHolder, position : Int) {
         holder.bind(iRepo.getAt(position), position)
+        iRepo.notifyAt(position)
 //        Log.d("TAG","RaceDetailsAdapter.onBindViewHolder")
     }
 
